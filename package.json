@@ -1,0 +1,20 @@
+{
+  "name": "ts-types-checker",
+  "version": "1.0.0",
+  "description": "This tool checks if for all npm dependencies in a project TypeScript types are available",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "package-json": "^10.0.1",
+  
+    "type-fest": "^4.41.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.24"
+  }
+}
