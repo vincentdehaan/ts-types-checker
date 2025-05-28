@@ -29,7 +29,11 @@ deps.concat(devDeps).forEach(async (packageName) => {
     } else {
       at_types = false
     }
-    console.log(styleText((own_types || at_types) ? "green" : "red" ,"%s %s: own_types=%s, @types=%s"), packageName, own_types, at_types);
+    console.log(
+      styleText(
+        (own_types || at_types) ? "green" : "red",
+        "%s %s: own_types=%s, @types=%s"
+      ), !(own_types || at_types) ? ">>>>>" : "", packageName, own_types, at_types);
   } catch (e) {
     console.log("%s: cannot find dependency on npm", packageName);
   }
