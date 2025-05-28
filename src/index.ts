@@ -10,11 +10,26 @@ const pj = JSON.parse(readFileSync(packageJsonPath, 'utf-8')) as PJ;
 console.log('Name: ', pj.name);
 console.log('Number of dependencies: ', Object.keys(pj.dependencies ?? {}).length);
 
-Object.keys(pj.dependencies ?? {}).forEach(async (packageName) => {
+let deps = Object.keys(pj.dependencies ?? {})
+let devDeps = Object.keys(pj.devDependencies ?? {})
+
+deps.concat(devDeps).forEach(async (packageName) => {
   try {
     let pj = await packageJson(packageName, {fullMetadata: true});
-    let own_types = pj.types
-    console.log("%s: own_types=%s", packageName, own_types != undefined);
+    let own_types = pj.types != undefined
+    let at_types: boolean
+    if(!own_types) {
+      try {
+        let at = await packageJson("@types/" + packageName);
+      } catch (e) {
+        at_types = false;
+      } finally {
+        at_types = true;
+      }
+    } else {
+      at_types = false
+    }
+    console.log("%s %s: own_types=%s, @types=%s",!(own_types || at_types) ? "\x1b[31m" : "", packageName, own_types, at_types);
   } catch (e) {
     console.log("%s: cannot find dependency on npm", packageName);
   }
